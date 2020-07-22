@@ -14,7 +14,7 @@ const TOTAL_QUESTIONS = 10;
 const App = () => {
   const [loading, setLoading] = useState(false);
   const [questions, setQuestions] = useState<QuestionState[]>([]);
-  const [number, setNumber] = useState(0);
+  const [questionIndex, setQuestionIndex] = useState(1);
   const [userAnswers, setUserAnswers] = useState<Answer[]>([]);
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(true);
@@ -30,7 +30,7 @@ const App = () => {
     setQuestions(newQuestions);
     setScore(0);
     setUserAnswers([]);
-    setNumber(0);
+    setQuestionIndex(0);
     setLoading(false);
   }
 
@@ -59,18 +59,21 @@ const App = () => {
 
       { !gameOver && !loading ? (
         <QuestionCard 
-        questionNr={number + 1}
+        questionNumber={questionIndex + 1}
         totalQuestions={TOTAL_QUESTIONS}
-        question={questions[number].question}
-        answers={questions[number].answers}
-        userAnswer={userAnswers ? userAnswers[number] : undefined}
+        question={questions[questionIndex].question}
+        answers={questions[questionIndex].answers}
+        userAnswer={userAnswers ? userAnswers[questionIndex] : undefined}
         callback={checkAnswer}
       />
       ) : null }
 
-      <button className='next' onClick={nextQuestion}>
-        Next Question
-      </button>
+      { !gameOver && !loading && userAnswers.length === (questionIndex + 1) && questionIndex !== TOTAL_QUESTIONS ? (
+        <button className='next' onClick={nextQuestion}>
+          Next Question
+        </button>
+      ) : null }
+
       
     </div>
   );
