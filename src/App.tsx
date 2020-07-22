@@ -5,7 +5,7 @@ import QuestionCard from './components/QuestionCard';
 type Answer = {
   question: string;
   answer: string;
-  correct: boolean;
+  isCorrect: boolean;
   correctAnswer: string;
 }
 
@@ -35,7 +35,20 @@ const App = () => {
   }
 
   const checkAnswer = (event: React.MouseEvent<HTMLButtonElement>) => {
-
+    if (!gameOver) {
+      const userAnswerValue = event.currentTarget.value;
+      const isCorrect = questions[questionIndex].correct_answer === userAnswerValue;
+      const userAnswerInfo = {
+        question: questions[questionIndex].question,
+        answer: userAnswerValue,
+        isCorrect: isCorrect,
+        correctAnswer: questions[questionIndex].correct_answer
+      }
+      if(isCorrect) {
+        setScore(prevScore => prevScore + 1);
+      }
+      setUserAnswers(prev => [...prev, userAnswerInfo]);
+    }
   }
 
   const nextQuestion = () => {
@@ -51,7 +64,7 @@ const App = () => {
             </button>
       ) : null }
 
-      { !gameOver ? (<p className='score'>Score:</p>
+      { !gameOver ? (<p className='score'>Score: {score}</p>
         ) : null }
       
       { loading ? (<p>Loading Questions...</p>
@@ -63,7 +76,7 @@ const App = () => {
         totalQuestions={TOTAL_QUESTIONS}
         question={questions[questionIndex].question}
         answers={questions[questionIndex].answers}
-        userAnswer={userAnswers ? userAnswers[questionIndex] : undefined}
+        userAnswerInfo={userAnswers ? userAnswers[questionIndex] : undefined}
         callback={checkAnswer}
       />
       ) : null }
@@ -73,8 +86,6 @@ const App = () => {
           Next Question
         </button>
       ) : null }
-
-      
     </div>
   );
 }
