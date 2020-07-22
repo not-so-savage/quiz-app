@@ -1,16 +1,16 @@
 import React from 'react';
-import { type } from 'os';
+import { Answer } from '../App';
 
 type Props = {
     question: string;
     answers: string[];
-    callback: any;
-    userAnswerInfo: any;
+    callback: (event: React.MouseEvent<HTMLButtonElement>) => void;
+    userAnswer: Answer | undefined;
     questionNumber: number;
     totalQuestions: number;
 }
 
-const QuestionCard: React.FC<Props> = ({ question, answers, callback, userAnswerInfo, questionNumber, totalQuestions }) => (
+const QuestionCard: React.FC<Props> = ({ question, answers, callback, userAnswer, questionNumber, totalQuestions }) => (
     <div>
         <p className='number'>
             Question: {questionNumber} / {totalQuestions}
@@ -19,7 +19,7 @@ const QuestionCard: React.FC<Props> = ({ question, answers, callback, userAnswer
         <div>
             {answers.map(answer => (
                 <div key={answer}>
-                    <button disabled={userAnswerInfo} value={answer} onClick={callback}>
+                    <button disabled={userAnswer ? true : false} value={answer} onClick={callback}>
                         <span dangerouslySetInnerHTML={{ __html: answer }} />
                     </button>
                 </div>

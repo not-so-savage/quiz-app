@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Difficulty, fetchQuizQuestions, QuestionState } from './API';
 import QuestionCard from './components/QuestionCard';
 
-type Answer = {
+export type Answer = {
   question: string;
   answer: string;
   isCorrect: boolean;
@@ -25,7 +25,7 @@ const App = () => {
     setLoading(true);
     setGameOver(false);
 
-    const newQuestions = await fetchQuizQuestions(TOTAL_QUESTIONS, Difficulty.HARD);
+    const newQuestions = await fetchQuizQuestions(TOTAL_QUESTIONS, Difficulty.EASY);
 
     setQuestions(newQuestions);
     setScore(0);
@@ -38,7 +38,7 @@ const App = () => {
     if (!gameOver) {
       const userAnswerValue = event.currentTarget.value;
       const isCorrect = questions[questionIndex].correct_answer === userAnswerValue;
-      const userAnswerInfo = {
+      const userAnswer = {
         question: questions[questionIndex].question,
         answer: userAnswerValue,
         isCorrect: isCorrect,
@@ -47,12 +47,17 @@ const App = () => {
       if(isCorrect) {
         setScore(prevScore => prevScore + 1);
       }
-      setUserAnswers(prev => [...prev, userAnswerInfo]);
+      setUserAnswers(prev => [...prev, userAnswer]);
     }
   }
 
   const nextQuestion = () => {
-
+    const nextQuestion = questionIndex + 1;
+    if(nextQuestion === TOTAL_QUESTIONS) {
+      setGameOver(true);
+    } else {
+      setQuestionIndex(prev => prev + 1);
+    }
   }
 
   return (
@@ -76,12 +81,12 @@ const App = () => {
         totalQuestions={TOTAL_QUESTIONS}
         question={questions[questionIndex].question}
         answers={questions[questionIndex].answers}
-        userAnswerInfo={userAnswers ? userAnswers[questionIndex] : undefined}
+        userAnswer={userAnswers ? userAnswers[questionIndex] : undefined}
         callback={checkAnswer}
       />
       ) : null }
 
-      { !gameOver && !loading && userAnswers.length === (questionIndex + 1) && questionIndex !== TOTAL_QUESTIONS ? (
+      { !gameOver && !loading && userAnswers.length === (questionIndex + 1) && (questionIndex + 1) !== TOTAL_QUESTIONS ? (
         <button className='next' onClick={nextQuestion}>
           Next Question
         </button>
