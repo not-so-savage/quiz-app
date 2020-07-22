@@ -1,3 +1,7 @@
+# Quiz App
+
+This project was made by following the 'React / Typescript Tutorial - Build a Quiz App' video on freeCodeCamp.org's YouTube channel. The tutor's website can be found here: https://www.weibenfalk.com/
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
