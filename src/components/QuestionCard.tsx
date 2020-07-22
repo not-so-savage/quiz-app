@@ -23,8 +23,8 @@ const QuestionCard: React.FC<Props> = ({ question, answers, callback, userAnswer
                         <span dangerouslySetInnerHTML={{ __html: answer }} />
                     </button>
                 </div>
-            ))};
-        </div>;
+            ))}
+        </div>
     </div>
 );
 
