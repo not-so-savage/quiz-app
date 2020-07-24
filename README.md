@@ -4,7 +4,7 @@ This is a quiz app created using a React/Typescript front-end, which fetches qui
 
 ## Build
 
-To run the application, use a terminal to navigate to the `qui-ui` directory and run:
+To run the application, use a terminal to navigate to the `quiz-ui` directory and run:
 
 ### `npm install`
 
