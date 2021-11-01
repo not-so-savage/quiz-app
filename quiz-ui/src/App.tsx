@@ -65,7 +65,7 @@ const App = () => {
     <>
       <GlobalStyle />
       <Wrapper>
-        <h1>JACK SAV'S QUIZ APP</h1>
+        <h1>Something Interesting</h1>
         { gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
               <button className='start' onClick={startQuiz}>
                 Start
